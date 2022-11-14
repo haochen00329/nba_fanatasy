@@ -200,6 +200,6 @@ while True:
     else:
         print("Please enter valid value!")
         continue
-    
+
 mycursor.close()
 db.close()

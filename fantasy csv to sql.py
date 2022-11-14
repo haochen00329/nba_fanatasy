@@ -146,7 +146,7 @@ try:
         ALTER TABLE {item}
         ADD COLUMN `2P%` double;
         UPDATE {item}
-        SET `2P%` = `2P`/`2PA`;
+        SET `2P%` = IF (`2PA` <> 0, `2P`/`2PA`,0);
         '''
         list0 = query0.split(';')
         for q in list0:
@@ -248,6 +248,10 @@ try:
             ROUND(PF * games,1) AS pf
         FROM {item};
         '''
+        list1 = query1.split(';')
+        for q in list1:
+            mycursor.execute(q.lstrip())
+
         for name in roster:
             query2 = f'''
             DROP TABLE IF EXISTS {name}_{item};
@@ -258,13 +262,10 @@ try:
             '''
 
             list2 = query2.split(';')
-            
             for q in list2:
                 mycursor.execute(q.lstrip())
 
-        list1 = query1.split(';')
-        for q in list1:
-            mycursor.execute(q.lstrip())
+
 
     db.commit()
     mycursor.close()
