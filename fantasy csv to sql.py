@@ -272,28 +272,3 @@ try:
 
 except Error as e:
     print("Error while connecting to MySQL", e)
-
-
-
-# opponent = input ("Who is your opponent?")
-# stats = input ("Which stats do you want to base on?")
-# mycursor.execute(f"SELECT * FROM {chart}")
-# for x in mycursor:
-#     print(x)
-
-# df = pd.read_csv(r"C:\Users\Hao\Desktop\nba fantasy project\data code\data csv\biweek.csv")
-# print(df.head())
-
-# with open(r"C:\Users\Hao\Desktop\nba fantasy project\data code\data csv\biweek.csv") as csv_file:
-#     csv_file = csv.reader(csv_file,delimiter=',')
-#     all_value = []
-#     for row in csv_file:
-#         value = (row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],\
-#             row[9],row[10],row[11],row[12],row[13],row[14],row[15],row[16],row[17],row[18])
-#         all_value.append(value)
-
-# query = "insert into `biweek` (`Player`,`PTS`,`REB`,`AST`,`BLK`,`STL`,`FG%`,`FT%`,`3PM`,`TO`,`GP`,`MIN`,`FTM`,`2PM`,`A/TO`,`PF`,`name`,`team`)\
-#      VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-# mycursor = db.cursor()
-# mycursor.executemany(query,all_value)
-# db.commnit()
