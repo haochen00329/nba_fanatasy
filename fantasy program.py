@@ -25,7 +25,7 @@ while True:
             stats = input("project stats based on: week, biweek, month, or season? ")
             print("--------------------------------------------------------------------")
             if stats in ['week','biweek', 'month','season']:
-                team1 = 'hao'
+                team1 = 'justin'
                 while True:
                     print('Press ENTER to go back')
                     team2 = input("opponent: ")

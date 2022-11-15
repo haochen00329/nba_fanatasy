@@ -80,6 +80,10 @@ try:
                     VALUES (%s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",row)
 
     queries = '''
+    UPDATE season s, player p
+    SET p.player = s.player
+    WHERE s.player LIKE CONCAT(p.player, ' %');
+
     #change team name to abbreviation
     UPDATE schedule s, team t
     SET s.away = t.tm
@@ -227,26 +231,28 @@ try:
         DROP TABLE IF EXISTS proj_{item};
         CREATE TABLE proj_{item}
         SELECT
-            Player,
-            Tm,
-            games,
-            ROUND(`2P` * games, 1) AS fgm,
-            ROUND(`2PA` * games, 1) AS fga,
-            `2P%` AS fgp,
-            ROUND(FT * games,1) AS ftm,
-            ROUND(FTA * games,1) AS fta,
-            `FT%` AS ftp,
-            ROUND(`3P` * games,1) AS tpm,
-            ROUND(`3PA` * games,1) AS tpa,
-            `3P%` AS tpp,
-            ROUND(PTS * games,1) AS pts,
-            ROUND(TRB * games,1) AS reb,
-            ROUND(AST * games,1) AS ast,
-            ROUND(STL * games,1) AS st,
-            ROUND(BLK * games,1) AS blk,
-            ROUND(TOV * games,1) AS tov,
-            ROUND(PF * games,1) AS pf
-        FROM {item};
+            p.Player,
+            w.Tm,
+            w.games,
+            ROUND(w.`2P` * w.games, 1) AS fgm,
+            ROUND(w.`2PA` * w.games, 1) AS fga,
+            w.`2P%` AS fgp,
+            ROUND(w.FT * w.games,1) AS ftm,
+            ROUND(w.FTA * w.games,1) AS fta,
+            w.`FT%` AS ftp,
+            ROUND(w.`3P` * w.games,1) AS tpm,
+            ROUND(w.`3PA` * w.games,1) AS tpa,
+            w.`3P%` AS tpp,
+            ROUND(w.PTS * w.games,1) AS pts,
+            ROUND(w.TRB * w.games,1) AS reb,
+            ROUND(w.AST * w.games,1) AS ast,
+            ROUND(w.STL * w.games,1) AS st,
+            ROUND(w.BLK * w.games,1) AS blk,
+            ROUND(w.TOV * w.games,1) AS tov,
+            ROUND(w.PF * w.games,1) AS pf
+        FROM {item} w
+        RIGHT JOIN player p
+            ON w.player = p.player;
         '''
         list1 = query1.split(';')
         for q in list1:
