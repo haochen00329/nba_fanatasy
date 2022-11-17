@@ -3,9 +3,10 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import re
 import os
-data_folder = r".\data csv"
+data_folder = os.path.join(r".", r"data folder")
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
+folder_path = os.path.join(r".", r"data folder")
 # df for week, biweek,month,season team
 list = [['week', 'https://www.basketball-reference.com/friv/last_n_days.fcgi?n=7&type=per_game'],['biweek','https://www.basketball-reference.com/friv/last_n_days.fcgi?n=15&type=per_game'],\
     ['month','https://www.basketball-reference.com/friv/last_n_days.fcgi?n=30&type=per_game'],['season','https://www.basketball-reference.com/leagues/NBA_2023_per_game.html'],\
@@ -23,7 +24,8 @@ for item in list:
     else:
         df['Player']=[re.sub(r"[^a-zA-Z\-\.\s\']",'?', x) for x in df['Player']]
         df = df[df.Tm != "Tm"]
-    df.to_csv(fr"{data_folder}\{item[0]}.csv")
+    path = os.path.join(folder_path,fr"{item[0]}.csv")
+    df.to_csv(path)
 
 # injury df
 header = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36'}
@@ -54,7 +56,9 @@ for row in injury_table:
         injury_list.append(injured_player)
 injury_df = pd.DataFrame(injury_list)
 injury_df = injury_df.dropna()
-injury_df.to_csv(fr"{data_folder}\injury.csv")
+injury_path = os.path.join(folder_path,r"injury.csv")
+injury_df.to_csv(injury_path)
+
 
 
 # full schedule df
@@ -66,7 +70,8 @@ for i in months:
     df = pd.read_html(html)[-1]
     schedule_df = pd.concat([schedule_df,df])
 
-schedule_df.to_csv(fr"{data_folder}\schedule.csv")
+schedule_path = os.path.join(folder_path,fr"schedule.csv")
+schedule_df.to_csv(schedule_path)
 
 
 

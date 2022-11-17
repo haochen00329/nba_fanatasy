@@ -2,7 +2,7 @@ import mysql.connector
 from mysql.connector import Error
 import csv
 import pwinput
-data_folder = r".\data csv"
+import os.path
 try:
 
     pwd = pwinput.pwinput("Password: ")
@@ -25,8 +25,11 @@ try:
     mycursor = db.cursor()
     # readcsvc to db
     tables = ['week','biweek','month','player', 'injury','team','schedule', 'roster', 'season']
+    folder_path = os.path.join(r".", r"data folder")
+
     for item in tables:
-        csv_data = csv.reader(open(fr"{data_folder}\{item}.csv"))
+        path = os.path.join(folder_path,fr"{item}.csv")
+        csv_data = csv.reader(open(path))
         header = next(csv_data)
         mycursor.execute(f"DROP TABLE IF EXISTS {item}")
         if item == 'player':

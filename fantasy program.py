@@ -2,6 +2,7 @@ import mysql.connector
 from mysql.connector import Error
 import pandas as pd
 import pwinput
+import os
 
 try:
     db = mysql.connector.connect(
@@ -14,8 +15,9 @@ try:
     mycursor = db.cursor()
     print("--------------------------------------------------------------------")
 
-
-    roster = pd.read_csv(r"C:\Users\Hao\Desktop\nba fantasy project\data code\data csv\roster.csv")
+    folder_path = os.path.join(r".", r"data folder")
+    path = os.path.join(folder_path,r"roster.csv")
+    roster = pd.read_csv(path)
     roster = list(roster.columns)
     while True:
         print('Press ENTER to go exit')
